@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<Horde> 
+  
+  <Enemy Name ="Carlos">
+    <HP>100</HP>
+    <Atq>50</Atq>
+    <Def>100</Def>
+    <AtqSpeed>1.0</AtqSpeed>
+    <XP>500</XP>
+    <Arma Id = "1">
+      <Type>Melee</Type>
+      <Range>1</Range>
+    </Arma>
+    <Arma Id = "2">
+      <Type>Melee</Type>
+      <Range>2</Range>
+    </Arma>
+  </Enemy>
+
+  <Enemy Name ="Javi">
+    <HP>150</HP>
+    <Atq>100</Atq>
+    <Def>40</Def>
+    <AtqSpeed>1.5</AtqSpeed>
+    <XP>1000</XP>
+    <Arma Id = "3">
+      <Type>Ranged</Type>
+      <Range>20</Range>
+    </Arma>
+  </Enemy>
+
+  <Enemy Name ="Oscar">
+    <HP>50</HP>
+    <Atq>10</Atq>
+    <Def>0</Def>
+    <AtqSpeed>1.0</AtqSpeed>
+    <XP>20</XP>
+    <Arma Id = "5">
+      <Type>Ranged</Type>
+      <Range>50</Range>
+    </Arma>
+    <Arma Id = "6">
+      <Type>Ranged</Type>
+      <Range>70</Range>
+    </Arma>
+  </Enemy>
+
+  <Enemy Name ="Alberto">
+    <HP>1000</HP>
+    <Atq>500</Atq>
+    <Def>800</Def>
+    <AtqSpeed>2.0</AtqSpeed>
+    <XP>10000</XP>
+    <Arma Id = "7">
+      <Type>Melee</Type>
+      <Range>10</Range>
+    </Arma>
+    <Arma Id = "7">
+      <Type>Melee</Type>
+      <Range>20</Range>
+    </Arma>
+    <Arma Id = "7">
+      <Type>Ranged</Type>
+      <Range>30</Range>
+    </Arma>
+  </Enemy>
+
+</Horde>

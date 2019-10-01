@@ -16,7 +16,7 @@ int main(int, char*[])
 		throw "No es pot inicialitzar SDL subsystems";
 
 	// --- WINDOW ---
-	SDL_Window *m_window{ SDL_CreateWindow("SDL...", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN) };
+	SDL_Window *m_window{ SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN) };
 	if (m_window == nullptr)
 		throw "No es pot inicialitzar SDL_Window";
 
@@ -61,13 +61,13 @@ int main(int, char*[])
 		}
 
 		// UPDATE
-
-		// DRAW
 		SDL_RenderClear(m_renderer);
+		// DRAW
+		
 		//Background
 		SDL_RenderCopy(m_renderer, bgTexture, nullptr, &bgRect);
 		SDL_RenderPresent(m_renderer);
-
+		
 	}
 
 	// --- DESTROY ---

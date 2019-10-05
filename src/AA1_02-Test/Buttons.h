@@ -10,17 +10,16 @@ struct Button {
 	SDL_Texture *OnClick;
 
 	bool isCollaiding;
-
-};
-
-Button createButton(Button butt,SDL_Renderer *m_renderer, int x, int y, const char *text, SDL_Color OnClick, SDL_Color OutClick, TTF_Font *font) {
-
 	
-	SDL_Surface *tmpSurf = (TTF_RenderText_Blended(font, text , OutClick));
-	butt.ButtRect = { x, y ,tmpSurf->w,  tmpSurf->h };
-	butt.OutClick = { SDL_CreateTextureFromSurface(m_renderer, tmpSurf) };
-	tmpSurf = (TTF_RenderText_Blended(font, text , OnClick));
-	butt.OnClick = { SDL_CreateTextureFromSurface(m_renderer, tmpSurf) };
+	Button(SDL_Renderer *m_renderer, int x, int y, const char *text, SDL_Color OnClickC, SDL_Color OutClickC, TTF_Font *font) {
 
-	return butt;
+		SDL_Surface *tmpSurf = (TTF_RenderText_Blended(font, text, OutClickC));
+		ButtRect = { x, y ,tmpSurf->w,  tmpSurf->h };
+		OutClick = { SDL_CreateTextureFromSurface(m_renderer, tmpSurf) };
+		tmpSurf = (TTF_RenderText_Blended(font, text, OnClickC));
+		OnClick = { SDL_CreateTextureFromSurface(m_renderer, tmpSurf) };
+
+	};
+
+
 };

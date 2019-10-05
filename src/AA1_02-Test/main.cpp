@@ -95,22 +95,15 @@ int main(int, char*[])
 
 		//PlayButton
 
-	Button playButton;
-	playButton.isCollaiding = false;
-	playButton = createButton(playButton, m_renderer, 330, 200 , "Play", SDL_Color{ 255,165,0, 0 }, SDL_Color{ 0, 0, 0, 0 }, font);
-
+	Button playButton (m_renderer, 330, 200, "Play", SDL_Color{ 255,165,0, 0 }, SDL_Color{ 0, 0, 0, 0 }, font);
 
 		//SoundButton
 
-	Button soundButton;
-	soundButton.isCollaiding = false;
-	soundButton = createButton(soundButton, m_renderer, 250, 350, "Sound on of",  SDL_Color{ 255,165,0, 0 }, SDL_Color{ 0, 0, 0, 0 }, font);
+	Button soundButton (m_renderer, 250, 350, "Sound on of",  SDL_Color{ 255,165,0, 0 }, SDL_Color{ 0, 0, 0, 0 }, font);
 
 		//ExitButton
 
-	Button ExitButton;
-	ExitButton.isCollaiding = false;
-	ExitButton = createButton(ExitButton, m_renderer, 330, 500, "Exit", SDL_Color{ 255, 0, 0, 0 }, SDL_Color{ 0, 0, 0, 0 }, font);
+	Button ExitButton (m_renderer, 330, 500, "Exit", SDL_Color{ 255, 0, 0, 0 }, SDL_Color{ 0, 0, 0, 0 }, font);
 	
 
 	// --- GAME LOOP ---

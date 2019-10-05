@@ -6,6 +6,7 @@
 #include <exception>
 #include <iostream>
 #include <string>
+#include "Buttons.h"
 
 //Game general information
 #define SCREEN_WIDTH 800
@@ -17,19 +18,6 @@ struct Vec2 {
 	int y = 0;
 };
 
-struct Button {
-
-	SDL_Rect ButtRect;
-
-	SDL_Texture *OutClick;
-	SDL_Texture *OnClick;
-
-	bool isCollaiding;
-
-
-
-};
-
 
 bool isCollaiding(SDL_Rect rectA, SDL_Rect mouse) {
 
@@ -38,7 +26,6 @@ bool isCollaiding(SDL_Rect rectA, SDL_Rect mouse) {
 	}
 	else
 		return false;
-		
 
 };
 
@@ -109,35 +96,21 @@ int main(int, char*[])
 		//PlayButton
 
 	Button playButton;
-	//Load out click color
-	tmpSurf = (TTF_RenderText_Blended(font, "Play", SDL_Color{ 0, 0, 0, 0 })); 
-	playButton.ButtRect = { 330, 200 ,tmpSurf->w,  tmpSurf->h};
-	playButton.OutClick = { SDL_CreateTextureFromSurface(m_renderer, tmpSurf) };
-	//Load on click color
-	tmpSurf = (TTF_RenderText_Blended(font, "Play", SDL_Color{ 255,165,0, 0 }));
-	playButton.OnClick = { SDL_CreateTextureFromSurface(m_renderer, tmpSurf) };
+	playButton.isCollaiding = false;
+	playButton = createButton(playButton, m_renderer, 330, 200 , "Play", SDL_Color{ 255,165,0, 0 }, SDL_Color{ 0, 0, 0, 0 }, font);
 
 
 		//SoundButton
 
 	Button soundButton;
-	tmpSurf = (TTF_RenderText_Blended(font, "Sound on off", SDL_Color{ 0, 0, 0, 0 }));
-	soundButton.ButtRect = { 250, 350 ,tmpSurf->w,  tmpSurf->h };
-	soundButton.OutClick = { SDL_CreateTextureFromSurface(m_renderer, tmpSurf) };
-	tmpSurf = (TTF_RenderText_Blended(font, "Sound on off", SDL_Color{ 255,165,0, 0 }));
-	soundButton.OnClick = { SDL_CreateTextureFromSurface(m_renderer, tmpSurf) };
-
+	soundButton.isCollaiding = false;
+	soundButton = createButton(soundButton, m_renderer, 250, 350, "Sound on of",  SDL_Color{ 255,165,0, 0 }, SDL_Color{ 0, 0, 0, 0 }, font);
 
 		//ExitButton
 
 	Button ExitButton;
-	tmpSurf = (TTF_RenderText_Blended(font, "Exit", SDL_Color{ 0, 0, 0, 0 }));
-	ExitButton.ButtRect = { 330, 500 ,tmpSurf->w,  tmpSurf->h };
-	ExitButton.OutClick = { SDL_CreateTextureFromSurface(m_renderer, tmpSurf) };
-	tmpSurf = (TTF_RenderText_Blended(font, "Exit", SDL_Color{ 255, 0, 0, 0 }));
-	ExitButton.OnClick = { SDL_CreateTextureFromSurface(m_renderer, tmpSurf) };
-
-		
+	ExitButton.isCollaiding = false;
+	ExitButton = createButton(ExitButton, m_renderer, 330, 500, "Exit", SDL_Color{ 255, 0, 0, 0 }, SDL_Color{ 0, 0, 0, 0 }, font);
 	
 
 	// --- GAME LOOP ---

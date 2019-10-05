@@ -103,7 +103,7 @@ int main(int, char*[])
 
 		//ExitButton
 
-	Button ExitButton (m_renderer, 330, 500, "Exit", SDL_Color{ 255, 0, 0, 0 }, SDL_Color{ 0, 0, 0, 0 }, font);
+	Button exitButton (m_renderer, 330, 500, "Exit", SDL_Color{ 255, 0, 0, 0 }, SDL_Color{ 0, 0, 0, 0 }, font);
 	
 
 	// --- GAME LOOP ---
@@ -130,7 +130,7 @@ int main(int, char*[])
 				break;
 			case  SDL_MOUSEBUTTONDOWN:
 				//Exit Button
-				if(ExitButton.isCollaiding)
+				if(exitButton.isCollaiding)
 					isRunning = false;
 				//Sound Button
 				else if (soundButton.isCollaiding) {
@@ -180,11 +180,11 @@ int main(int, char*[])
 			SDL_RenderCopy(m_renderer, playButton.OutClick, nullptr, &playButton.ButtRect);
 		}
 			//ExitButton
-		ExitButton.isCollaiding = isCollaiding(ExitButton.ButtRect, playerRect);
-		if (ExitButton.isCollaiding)
-			SDL_RenderCopy(m_renderer, ExitButton.OnClick, nullptr, &ExitButton.ButtRect);
+		exitButton.isCollaiding = isCollaiding(exitButton.ButtRect, playerRect);
+		if (exitButton.isCollaiding)
+			SDL_RenderCopy(m_renderer, exitButton.OnClick, nullptr, &exitButton.ButtRect);
 		else
-			SDL_RenderCopy(m_renderer, ExitButton.OutClick, nullptr, &ExitButton.ButtRect);
+			SDL_RenderCopy(m_renderer, exitButton.OutClick, nullptr, &exitButton.ButtRect);
 			//SoundButton
 		soundButton.isCollaiding = isCollaiding(soundButton.ButtRect, playerRect);
 		if (soundButton.isCollaiding)

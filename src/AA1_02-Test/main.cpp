@@ -7,27 +7,11 @@
 #include <iostream>
 #include <string>
 #include "Buttons.h"
+#include "Utils.h"
 
 //Game general information
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
-
-
-struct Vec2 {
-	int x = 0;
-	int y = 0;
-};
-
-
-bool isCollaiding(SDL_Rect rectA, SDL_Rect mouse) {
-
-	if (((mouse.x + mouse.w) > rectA.x && (rectA.x + rectA.w) > mouse.x) && ((mouse.y + mouse.h) > rectA.y &&  mouse.y < (rectA.y + rectA.h))) {
-			return true;
-	}
-	else
-		return false;
-
-};
 
 
 int main(int, char*[])
@@ -91,7 +75,7 @@ int main(int, char*[])
 
 	//Reload de font with changed size
 	font = (TTF_OpenFont("../../res/ttf/saiyan.ttf", 60));
-	if (playerTexture == nullptr) throw "Cant load Font";
+	if (font == nullptr) throw "Cant load Font";
 
 		//PlayButton
 
@@ -158,7 +142,7 @@ int main(int, char*[])
 
 		
 	
-		// DRAW
+		// DRAW ----Creo que esta mal añadir logica en el draw----
 			//Background
 		SDL_RenderCopy(m_renderer, bgTexture, nullptr, &bgRect);
 			//Text

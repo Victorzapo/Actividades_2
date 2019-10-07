@@ -169,7 +169,7 @@ int main(int, char*[])
 				//Sound Button
 				else if (soundButton.isCollaiding) {
 					if (Mix_PausedMusic())
-						Mix_Resume;//Mix_PlayMusic(soundtrack, -1);
+						Mix_ResumeMusic();  
 					else 
 						Mix_PauseMusic();
 				}

@@ -16,16 +16,16 @@
 
 int main(int, char*[])
 {
-	// --- INIT SDL ---
+	//  ---------------INIT SDL---------------
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0)
 		throw "Cant load SDL subsystems";
 
-	// --- WINDOW ---
+	//  ---------------WINDOW ---------------
 	SDL_Window *m_window{ SDL_CreateWindow("Game", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN) };
 	if (m_window == nullptr)
 		throw "Cant load SDL_Window";
 
-	// --- RENDERER ---
+	//  ---------------RENDERER---------------
 	SDL_Renderer *m_renderer{ SDL_CreateRenderer(m_window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC) };
 	if (m_renderer == nullptr)
 		throw "Cant load SDL_Renderer";
@@ -42,7 +42,7 @@ int main(int, char*[])
 	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
 		throw "Cant load mix system";
 
-	// --- SPRITES ---
+	//  ---------------SPRITES---------------
 		//Background
 	SDL_Texture* bgTexture{ IMG_LoadTexture(m_renderer, "../../res/img/bg.jpg") };
 	if (bgTexture == nullptr) throw "Error: bgTexture init";
@@ -51,35 +51,35 @@ int main(int, char*[])
 
 
 
-	// --- TEXT ---
+	// ---------------TEXT---------------
 	TTF_Font *font(TTF_OpenFont("../../res/ttf/saiyan.ttf",80));
 	SDL_Surface *tmpSurf(TTF_RenderText_Blended(font, "My first SDL Game", SDL_Color{ 255,165,0, 0 }));
 	SDL_Texture *text{ SDL_CreateTextureFromSurface(m_renderer, tmpSurf) };
 	SDL_Rect textRect{ 100, 50 , tmpSurf->w, tmpSurf->h };
 
-	// --- AUDIO ---
+	//  ---------------AUDIO---------------
 		Mix_Music *soundtrack{ Mix_LoadMUS("../../res/au/mainTheme.mp3") };
 	if (!soundtrack) throw "Unable to load song";
 	Mix_VolumeMusic(MIX_MAX_VOLUME / 2);
 	Mix_PlayMusic(soundtrack, -1);
 
-	// --- MOUSE ---
+	//  ---------------MOUSE---------------
 
 	Vec2 mouseCords;
 	SDL_Texture *playerTexture{ IMG_LoadTexture(m_renderer, "../../res/img/kintoun.png") };
 	if (playerTexture == nullptr) throw "Cant load texture";
 	SDL_Rect playerRect{ 0, 0, 87, 47 };
-	SDL_Rect playerTarget{ 0, 0, 50, 50 }; // Support for center the mouse
+	SDL_Rect playerTarget{ 0, 0, 50, 50 }; // Support to center the mouse
 
-	// ---BUTTONS---
+	//  ---------------BUTTONS---------------
 
-	//Reload de font with changed size
-	font = (TTF_OpenFont("../../res/ttf/saiyan.ttf", 60));
+	//Reload de font with changed size 
+	font = (TTF_OpenFont("../../res/ttf/saiyan.ttf", 60)); 
 	if (font == nullptr) throw "Cant load Font";
 
 		//PlayButton
 
-	Button playButton (m_renderer, 330, 200, "Play", SDL_Color{ 255,165,0, 0 }, SDL_Color{ 0, 0, 0, 0 }, font);
+	Button playButton (m_renderer, 330, 200, "Play", SDL_Color{ 255,165,0, 0 }, SDL_Color{ 255, 0, 0, 0 }, font);
 
 		//SoundButton
 
@@ -90,97 +90,121 @@ int main(int, char*[])
 	Button exitButton (m_renderer, 330, 500, "Exit", SDL_Color{ 255, 0, 0, 0 }, SDL_Color{ 0, 0, 0, 0 }, font);
 	
 
-	// --- GAME LOOP ---
+	//  ---------------GAME LOOP---------------
 	SDL_Event event;
+		//Control Bool
 	bool isRunning = true;
 	bool playPressed = false;
-	while (isRunning) {
+	bool EscPressed = false;
+	bool mouseMov = false;
+	bool mouseClick = false;
+	while (isRunning) {		
+		//Bool Update
+		EscPressed = false;
+		mouseMov = false;
+		mouseClick = false;
 		// HANDLE EVENTS
 		while (SDL_PollEvent(&event)) {
-			//Mouse Update
-			mouseCords.x = event.motion.x;
-			mouseCords.y = event.motion.y;
 			switch (event.type) {
 			case SDL_QUIT:
 				isRunning = false;
 				break;
 			case SDL_KEYDOWN:
-				if (event.key.keysym.sym == SDLK_ESCAPE) isRunning = false;
+				if (event.key.keysym.sym == SDLK_ESCAPE) EscPressed = true;
 				break;
 			case SDL_MOUSEMOTION:
-				//Mouse
-				playerTarget.x = mouseCords.x - playerTarget.h / 2;
-				playerTarget.y = mouseCords.y - playerTarget.w / 2;
+				mouseMov = true;
 				break;
 			case  SDL_MOUSEBUTTONDOWN:
-				//Exit Button
-				if(exitButton.isCollaiding)
-					isRunning = false;
-				//Sound Button
-				else if (soundButton.isCollaiding) {
-					if (Mix_PausedMusic())
-						Mix_ResumeMusic();  
-					else 
-						Mix_PauseMusic();
-				}
-				//Play Button
-				else if (playButton.isCollaiding) {
-					if (playPressed)
-						playPressed = false;
-					else
-						playPressed = true;
-				}
+				mouseClick = true;
 				break;
 			default:;
 			}
 		}
 
-		// UPDATE
-		SDL_RenderClear(m_renderer);
-		playerRect.x += (playerTarget.x - playerRect.x) /10;
-		playerRect.y += (playerTarget.y - playerRect.y) /10;
+	//  ---------------UPDATE---------------
+			
+			//Quit
+		if (EscPressed)isRunning = false;
+			//Mouse
+		playerRect.x += (playerTarget.x - playerRect.x) / 10;
+		playerRect.y += (playerTarget.y - playerRect.y) / 10;
+		if (mouseMov) {
+			mouseCords.x = event.motion.x;
+			mouseCords.y = event.motion.y;
+			playerTarget.x = mouseCords.x - playerTarget.h / 2;
+			playerTarget.y = mouseCords.y - playerTarget.w / 2;
+		}
+			//Play Button
+		playButton.isCollaiding = isCollaiding(playButton.ButtRect, playerRect);
+				//Texture
+		if (playButton.isCollaiding)
+			playButton.ActualTexture = playButton.OnClick;
+		else
+			playButton.ActualTexture = playButton.OutClick;
+				//Action
+		if (playButton.isCollaiding && mouseClick) {
+			if (playPressed)
+				playPressed = false;
+			else
+				playPressed = true;
+				//Changing color when clicking
+			if (playPressed) {
+				tmpSurf = (TTF_RenderText_Blended(font, "Play", SDL_Color{ 124,252, 0, 0 }));
+				playButton.OutClick = { SDL_CreateTextureFromSurface(m_renderer, tmpSurf) };
+				playButton.ActualTexture = playButton.OutClick;
+			}
+			else {
+				tmpSurf = (TTF_RenderText_Blended(font, "Play", SDL_Color{ 255,0, 0, 0 }));
+				playButton.OutClick = { SDL_CreateTextureFromSurface(m_renderer, tmpSurf) };
+				playButton.ActualTexture = playButton.OutClick;
+			}
+		}
+
+			//ExitButton
+				//Texture
+		exitButton.isCollaiding = isCollaiding(exitButton.ButtRect, playerRect);
+		if (exitButton.isCollaiding)
+			exitButton.ActualTexture = exitButton.OnClick;
+		else
+			exitButton.ActualTexture = exitButton.OutClick;
+				//Action
+		if (exitButton.isCollaiding && mouseClick)
+			isRunning = false;
+		
+		
+			//Sound Button
+				//Texture
+		soundButton.isCollaiding = isCollaiding(soundButton.ButtRect, playerRect);
+		if (soundButton.isCollaiding)
+			soundButton.ActualTexture = soundButton.OnClick;
+		else
+			soundButton.ActualTexture = soundButton.OutClick;
+				//Action
+		if (soundButton.isCollaiding && mouseClick) {
+			if (Mix_PausedMusic())
+				Mix_ResumeMusic();
+			else
+				Mix_PauseMusic();
+		}
 
 		
-	
-		// DRAW ----Creo que esta mal añadir logica en el draw----
+	// ---------------DRAW---------------
+		SDL_RenderClear(m_renderer);
 			//Background
 		SDL_RenderCopy(m_renderer, bgTexture, nullptr, &bgRect);
 			//Text
 		SDL_RenderCopy(m_renderer, text, nullptr, &textRect);
 			//PlayButton
-		playButton.isCollaiding = isCollaiding(playButton.ButtRect, playerRect);
-		if(playButton.isCollaiding)
-			SDL_RenderCopy(m_renderer, playButton.OnClick, nullptr, &playButton.ButtRect);
-		else {
-			//Changing color when clicking
-			if (playPressed) {
-				tmpSurf = (TTF_RenderText_Blended(font, "Play", SDL_Color{ 124,252, 0, 0 }));
-				playButton.OutClick = { SDL_CreateTextureFromSurface(m_renderer, tmpSurf) };
-			}
-			else {
-				tmpSurf = (TTF_RenderText_Blended(font, "Play", SDL_Color{ 255, 0, 0, 0 }));
-				playButton.OutClick = { SDL_CreateTextureFromSurface(m_renderer, tmpSurf) };
-			}
-			SDL_RenderCopy(m_renderer, playButton.OutClick, nullptr, &playButton.ButtRect);
-		}
+		SDL_RenderCopy(m_renderer, playButton.ActualTexture, nullptr, &playButton.ButtRect);   
 			//ExitButton
-		exitButton.isCollaiding = isCollaiding(exitButton.ButtRect, playerRect);
-		if (exitButton.isCollaiding)
-			SDL_RenderCopy(m_renderer, exitButton.OnClick, nullptr, &exitButton.ButtRect);
-		else
-			SDL_RenderCopy(m_renderer, exitButton.OutClick, nullptr, &exitButton.ButtRect);
+		SDL_RenderCopy(m_renderer, exitButton.ActualTexture, nullptr, &exitButton.ButtRect);
 			//SoundButton
-		soundButton.isCollaiding = isCollaiding(soundButton.ButtRect, playerRect);
-		if (soundButton.isCollaiding)
-			SDL_RenderCopy(m_renderer, soundButton.OnClick, nullptr, &soundButton.ButtRect);
-		else
-			SDL_RenderCopy(m_renderer, soundButton.OutClick, nullptr, &soundButton.ButtRect);
+		SDL_RenderCopy(m_renderer, soundButton.ActualTexture, nullptr, &soundButton.ButtRect);
 			//Player
 		SDL_RenderCopy(m_renderer, playerTexture, nullptr, &playerRect);
 		
-		
-		
-		
+	
 		SDL_RenderPresent(m_renderer);
 		SDL_RenderClear(m_renderer);
 	

@@ -12,6 +12,7 @@
 //Game general information
 #define SCREEN_WIDTH 800
 #define SCREEN_HEIGHT 600
+#define FPS 60
 
 
 int main(int, char*[])
@@ -39,17 +40,33 @@ int main(int, char*[])
 		throw "Cant load SDL_TTF";
 		
 	//-->SDL_Mix
-	if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
-		throw "Cant load mix system";
+	//if (Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 1024) == -1)
+		//throw "Cant load mix system";
 
 	//  ---------------SPRITES---------------
 		//Background
 	SDL_Texture* bgTexture{ IMG_LoadTexture(m_renderer, "../../res/img/bg.jpg") };
 	if (bgTexture == nullptr) throw "Error: bgTexture init";
 	SDL_Rect bgRect{ 0,0,SCREEN_WIDTH, SCREEN_HEIGHT };
+	
 	//-->Animated Sprite ---
 
+	SDL_Texture *playerTexture{ IMG_LoadTexture(m_renderer, "../../res/img/sp01.png") };
+	SDL_Rect playerRect, playerPosition;
+	int textW, textH, frameW, frameH;
+	SDL_QueryTexture(playerTexture, NULL, NULL, &textW, &textH);
+	//Search the correct frame
+	frameW = textW / 6; //6 colum 
+	frameH = textH / 1; // 1 line
+	//Position
+	playerPosition.x = 120;
+	playerPosition.y = 120;
+	//Propotion
+	playerRect.x = playerRect.y = 0; //Const Ratio
 
+	playerPosition.h = playerRect.h = frameH;
+	playerPosition.w = playerRect.w = frameW;
+	int frameTime = 0;
 
 	// ---------------TEXT---------------
 	TTF_Font *font(TTF_OpenFont("../../res/ttf/saiyan.ttf",80));
@@ -66,10 +83,10 @@ int main(int, char*[])
 	//  ---------------MOUSE---------------
 
 	Vec2 mouseCords;
-	SDL_Texture *playerTexture{ IMG_LoadTexture(m_renderer, "../../res/img/kintoun.png") };
-	if (playerTexture == nullptr) throw "Cant load texture";
-	SDL_Rect playerRect{ 0, 0, 87, 47 };
-	SDL_Rect playerTarget{ 0, 0, 50, 50 }; // Support to center the mouse
+	SDL_Texture *mouseTexture{ IMG_LoadTexture(m_renderer, "../../res/img/kintoun.png") };
+	if (mouseTexture == nullptr) throw "Cant load texture";
+	SDL_Rect mouseRect{ 0, 0, 87, 47 };
+	SDL_Rect mouseTarget{ 0, 0, 50, 50 }; // Support to center the mouse
 
 	//  ---------------BUTTONS---------------
 
@@ -88,7 +105,7 @@ int main(int, char*[])
 		//ExitButton
 
 	Button exitButton (m_renderer, 330, 500, "Exit", SDL_Color{ 255, 0, 0, 0 }, SDL_Color{ 0, 0, 0, 0 }, font);
-	
+
 
 	//  ---------------GAME LOOP---------------
 	SDL_Event event;
@@ -110,7 +127,8 @@ int main(int, char*[])
 				isRunning = false;
 				break;
 			case SDL_KEYDOWN:
-				if (event.key.keysym.sym == SDLK_ESCAPE) EscPressed = true;
+				//if (event.key.keysym.sym == SDLK_ESCAPE) EscPressed = true;
+				if (event.key.keysym.sym == SDLK_LCTRL) EscPressed = true;
 				break;
 			case SDL_MOUSEMOTION:
 				mouseMov = true;
@@ -123,20 +141,36 @@ int main(int, char*[])
 		}
 
 	//  ---------------UPDATE---------------
-			
+			//Player
+		frameTime++;
+		if (FPS / frameTime <= 9) {
+			frameTime = 0;
+			playerRect.x += frameW;
+			if (playerRect.x >= textW)
+				playerRect.x = 0;
+		}
+
+
 			//Quit
-		if (EscPressed)isRunning = false;
+		//if (EscPressed)isRunning = false;
+		if (EscPressed)
+			playerPosition.x++;
+
 			//Mouse
-		playerRect.x += (playerTarget.x - playerRect.x) / 10;
-		playerRect.y += (playerTarget.y - playerRect.y) / 10;
+		
+	
 		if (mouseMov) {
+			
 			mouseCords.x = event.motion.x;
 			mouseCords.y = event.motion.y;
-			playerTarget.x = mouseCords.x - playerTarget.h / 2;
-			playerTarget.y = mouseCords.y - playerTarget.w / 2;
+			mouseTarget.x = mouseCords.x - mouseTarget.h / 2;
+			mouseTarget.y = mouseCords.y - mouseTarget.w / 2;
 		}
+		
+		mouseRect.x += (mouseTarget.x - mouseRect.x) / 10;
+		mouseRect.y += (mouseTarget.y - mouseRect.y) / 10;
 			//Play Button
-		playButton.isCollaiding = isCollaiding(playButton.ButtRect, playerRect);
+		playButton.isCollaiding = isCollaiding(playButton.ButtRect, mouseRect);
 				//Texture
 		if (playButton.isCollaiding)
 			playButton.ActualTexture = playButton.OnClick;
@@ -163,7 +197,7 @@ int main(int, char*[])
 
 			//ExitButton
 				//Texture
-		exitButton.isCollaiding = isCollaiding(exitButton.ButtRect, playerRect);
+		exitButton.isCollaiding = isCollaiding(exitButton.ButtRect, mouseRect);
 		if (exitButton.isCollaiding)
 			exitButton.ActualTexture = exitButton.OnClick;
 		else
@@ -172,10 +206,9 @@ int main(int, char*[])
 		if (exitButton.isCollaiding && mouseClick)
 			isRunning = false;
 		
-		
 			//Sound Button
 				//Texture
-		soundButton.isCollaiding = isCollaiding(soundButton.ButtRect, playerRect);
+		soundButton.isCollaiding = isCollaiding(soundButton.ButtRect, mouseRect);
 		if (soundButton.isCollaiding)
 			soundButton.ActualTexture = soundButton.OnClick;
 		else
@@ -201,8 +234,10 @@ int main(int, char*[])
 		SDL_RenderCopy(m_renderer, exitButton.ActualTexture, nullptr, &exitButton.ButtRect);
 			//SoundButton
 		SDL_RenderCopy(m_renderer, soundButton.ActualTexture, nullptr, &soundButton.ButtRect);
+			//Mouse
+		SDL_RenderCopy(m_renderer, mouseTexture, nullptr, &mouseRect);
 			//Player
-		SDL_RenderCopy(m_renderer, playerTexture, nullptr, &playerRect);
+		SDL_RenderCopy(m_renderer, playerTexture, &playerRect, &playerPosition);
 		
 	
 		SDL_RenderPresent(m_renderer);
@@ -214,6 +249,7 @@ int main(int, char*[])
 	// --- DESTROY ---
 	Mix_CloseAudio();
 	SDL_DestroyTexture(bgTexture);
+	SDL_DestroyTexture(mouseTexture);
 	SDL_DestroyTexture(playerTexture);
 	IMG_Quit();
 	SDL_DestroyRenderer(m_renderer);

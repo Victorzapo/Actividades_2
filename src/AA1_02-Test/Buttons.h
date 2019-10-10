@@ -21,7 +21,7 @@ struct Button {
 		OutClick = { SDL_CreateTextureFromSurface(m_renderer, tmpSurf) };
 		tmpSurf = (TTF_RenderText_Blended(font, text, OnClickC));
 		OnClick = { SDL_CreateTextureFromSurface(m_renderer, tmpSurf) };
-		SDL_FreeSurface;
+		SDL_FreeSurface(tmpSurf);
 	};
 
 

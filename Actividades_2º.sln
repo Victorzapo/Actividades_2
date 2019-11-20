@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.438
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AA1_01", "src\AA1_01\AA1_01.vcxproj", "{D78BADE3-7848-4FBE-82CB-B21E2A3C5CE0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AA1_01_XML", "src\AA1_01\AA1_01.vcxproj", "{D78BADE3-7848-4FBE-82CB-B21E2A3C5CE0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AA1_02-Test", "src\AA1_02-Test\AA1_02-Test.vcxproj", "{DA69B2ED-E164-46C9-9D11-F32B691A684D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AA1_02_SDL", "src\AA1_02-Test\AA1_02-Test.vcxproj", "{DA69B2ED-E164-46C9-9D11-F32B691A684D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AA1_05", "AA1_05\AA1_05.vcxproj", "{4A343824-A4C1-405B-9295-64FE5448954C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,14 @@ Global
 		{DA69B2ED-E164-46C9-9D11-F32B691A684D}.Release|x64.Build.0 = Release|x64
 		{DA69B2ED-E164-46C9-9D11-F32B691A684D}.Release|x86.ActiveCfg = Release|Win32
 		{DA69B2ED-E164-46C9-9D11-F32B691A684D}.Release|x86.Build.0 = Release|Win32
+		{4A343824-A4C1-405B-9295-64FE5448954C}.Debug|x64.ActiveCfg = Debug|x64
+		{4A343824-A4C1-405B-9295-64FE5448954C}.Debug|x64.Build.0 = Debug|x64
+		{4A343824-A4C1-405B-9295-64FE5448954C}.Debug|x86.ActiveCfg = Debug|Win32
+		{4A343824-A4C1-405B-9295-64FE5448954C}.Debug|x86.Build.0 = Debug|Win32
+		{4A343824-A4C1-405B-9295-64FE5448954C}.Release|x64.ActiveCfg = Release|x64
+		{4A343824-A4C1-405B-9295-64FE5448954C}.Release|x64.Build.0 = Release|x64
+		{4A343824-A4C1-405B-9295-64FE5448954C}.Release|x86.ActiveCfg = Release|Win32
+		{4A343824-A4C1-405B-9295-64FE5448954C}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -20,8 +20,8 @@
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{4A343824-A4C1-405B-9295-64FE5448954C}</ProjectGuid>
-    <RootNamespace>AA105</RootNamespace>
+    <ProjectGuid>{0810CFCA-2B2F-4C87-AAD9-C2A4C294ED3A}</ProjectGuid>
+    <RootNamespace>AA106</RootNamespace>
     <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -116,9 +116,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="tree.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Binaryh.h" />
+    <ClInclude Include="Nodeh.h" />
+    <ClInclude Include="tree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

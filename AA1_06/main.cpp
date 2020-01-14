@@ -16,5 +16,9 @@ int main() {
 	std::cout << "PreOrder " << std::endl;
 	tree.PreOrder();
 	
+	int height = tree.heigth();
+
+	std::cout << "Height:  " << height << std::endl;
+	
 	return 0;
 }

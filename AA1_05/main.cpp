@@ -6,55 +6,44 @@
 
 
 
-int main() {
 
-	//1
-	std::cout << "Ejercicio 1" << std::endl;
-	//Define
-	std::vector<int> a({1,2,3,4,5,6,7,8,9,10});
+int main()
+{
+	//AA1_05: Ejercicio 1
+	std::vector<int> a({ 1,2,3,4,5,6,7,8,9,10 });
+	SaveVector(a, "TestSaveVector.bin");
+	for (int i = 0; i < 10; i++) { a[i] = a[i] + 10; };
+	a.push_back(1000);
+	for (int i = 0; i < a.size(); i++) { std::cout << a[i] << ","; };
+	std::cout << "\n";
+	RecoverVector(a, "TestSaveVector.bin");
+	std::cout << "Ejercicio1: ";
+	for (int i = 0; i < a.size(); i++) { std::cout << a[i] << ","; };
 
-	//Save vector
-	saveVector(a, "TestSaveVector.bin");
+	std::cout << std::endl;
 
-	//Mod vector
-	for (int i = 0; i < a.size(); i++) { a[i] = a[i] + 10; }
+	//AA1_05: Ejercicio 2
 
-	//Recover
-	recoverVector(a, "TestSaveVector.bin");
+	std::vector<Object> objects;
 
-	//Print
-	for (int i = 0; i < a.size(); i++) { std::cout << a[i] << std::endl; }	
-	//2
-	std::cout << "Ejercicio 2" << std::endl;
-	//Define
-	Object obj1('a', 5 ,10);
-	Object obj2('b', 7 , 20);
-	Object obj3('c', 20, 15);
+	objects.push_back({ 'a',1,11 });
+	objects.push_back({ 'b',2,22 });
+	objects.push_back({ 'c',3,33 });
+	objects.push_back({ 'd',4,44 });
+	objects.push_back({ 'e',5,55 });
+	//guardo 5
+	Save(objects, "TestSaveObjects.bin");
+	objects[0] = { 'x',6,66 };
+	objects[4] = { 'z',9,99 };
+	objects.push_back({ 'f',7,77 });
+	//hay 6
+	Recover(objects, "TestSaveObjects.bin");
+	//recupero
+	std::cout << "Ejercicio2: " << std::endl;
+	for (int i = 0; i < objects.size(); i++) {
+		std::cout << i << ":" << objects[i].type << "," << objects[i].x << "," << objects[i].y;
+		std::cout << std::endl;
+	};
 
-	std::vector<Object> objcts({obj1, obj2, obj3});
-	
-	//Save objects
-	save(objcts, "ObjectSave");
-
-	//Mod objects
-	for (int i = 0; i < objcts.size(); i++)
-		objcts[i].x++;
-
-	//Recover
-	recover(objcts, "ObjectSave");
-
-
-	//Print
-	for (int i = 0; i < objcts.size(); i++) {
-		std::cout << "Object " << i << std::endl;
-		std::cout << objcts[i].type << std::endl;
-		std::cout << objcts[i].x << std::endl;
-		std::cout << objcts[i].y << std::endl;
-		
-	}
-
-	
-	
-	
 	return 0;
 }

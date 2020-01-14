@@ -2,6 +2,7 @@
 #include <map>
 #include <vector>
 #include <forward_list>
+#include <iostream>
 
 typedef int vertex;
 typedef std::pair<int, int> edge;

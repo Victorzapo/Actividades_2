@@ -21,5 +21,19 @@ int main(){
 
 	GraphD graf(ed);
 
+	edge f{4, 5};
+
+	graf.Insert(f);
+
+	graf.Print(); 
+
+	int index = graf.Index(1);
+	
+
+	bool euler = graf.IsEulerian();
+
+	graf.Remove(f);
+
+
 	return 0;
 }

@@ -11,37 +11,23 @@ GraphD::GraphD(GraphD * g)
 GraphD::GraphD(std::vector<edge> el)
 {
 
-	std::map<vertex, std::vector<vertex>>::iterator it;
-	
-
-
-	for (int i = 0; i < el.size(); i++) {
-		for (it = g.begin(); it != g.end(); it++) {
-			it = g.find(el[i].first);
-			if (it == g.end()) {
-				g.insert(el[i].first, el[i].second);
-				//it->second.push_back(el[i].second);
-			}
-			else
-				it->second.push_back(el[i].second);
-
-			}
-
-
-	}
-
+	for (int i = 0; i < el.size(); i++) 
+		g[el[i].first].push_back(el[i].second);
+		
 }
 
 GraphD::~GraphD()
 {
 }
 
-void GraphD::Insert(edge)
+void GraphD::Insert(edge ed)
 {
+	g[ed.first].push_back(ed.second);
 }
 
-void GraphD::Remove(edge)
+void GraphD::Remove(edge ed)
 {
+	g.erase(ed.first);
 }
 
 bool GraphD::Path(vertex initial, vertex final)
@@ -56,14 +42,37 @@ bool GraphD::Path(vertex initial, vertex final, std::forward_list<vertex> vlist)
 
 void GraphD::Print()
 {
+	std::map<vertex,std::vector<vertex>>::iterator it;
+
+	for (it = g.begin(); it != g.end(); it++) {
+		std::cout << "{ " << it->first << "," << it->second[0] << " }" << std::endl;
+		for(int i = 1; i < it->second.size(); i++)
+			std::cout << "{ " << it->first << "," << it->second[i] << " }" << std::endl;
+
+	}
+
 }
 
 bool GraphD::IsEulerian()
 {
-	return false;
+	std::map<vertex, std::vector<vertex>>::iterator it;
+
+	int tmpIndex;
+	int oddIndex;
+
+	for (it = g.begin(); it != g.end(); it++) {
+		tmpIndex = Index(it->first);
+		if (tmpIndex % 2 != 0)
+			oddIndex++;
+	}
+
+	if (oddIndex <= 2)
+		return true;
+	else
+		return false;
 }
 
-int GraphD::Index(vertex)
+int GraphD::Index(vertex v)
 {
-	return 0;
+	return g[v].size();
 }

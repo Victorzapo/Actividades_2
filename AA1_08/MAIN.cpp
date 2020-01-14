@@ -9,7 +9,7 @@ int main(){
 
 
 	std::vector<edge> ed;
-	edge a{1,2};
+	edge a{ 1,2 };
 	edge b{ 1,4 };
 	edge c{ 2,3 };
 	edge d{ 3,1 };

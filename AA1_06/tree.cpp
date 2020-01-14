@@ -1,4 +1,3 @@
-#include "..\Actividad_Recuç\binaryTree.h"
 #include "tree.h"
 
 int binaryTree::getNumberNodesRecPriv(node* actNode)
@@ -46,7 +45,7 @@ void binaryTree::PreOrderPriv(node* actnode)
 	if (actnode->izq == nullptr && actnode->drch == nullptr) return;
 }
 
-int binaryTree::heigthPriv(node* actnoden)
+int binaryTree::heigthPriv(node* actnode)
 {
 	int maxlvl = 0;
 	
@@ -57,11 +56,6 @@ int binaryTree::heigthPriv(node* actnoden)
 	}
 	if (actnode->izq == nullptr && actnode->drch == nullptr)
 		return maxlvl;
-}
-
-node * binaryTree::Search()
-{
-	return nullptr;
 }
 
 void binaryTree::newTree()
@@ -85,6 +79,7 @@ int binaryTree::getNumberNodesRec()
 {	
 	if (root == nullptr)
 		return 0;
+
 	return getNumberNodesRecPriv(root);
 }
 

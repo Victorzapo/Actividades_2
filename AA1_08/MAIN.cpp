@@ -22,8 +22,10 @@ int main(){
 	GraphD graf(ed);
 
 	edge f{4, 5};
+	edge e{ 4, 2 };
 
 	graf.Insert(f);
+	graf.Insert(e);
 
 	graf.Print(); 
 

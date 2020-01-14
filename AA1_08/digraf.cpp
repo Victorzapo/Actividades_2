@@ -4,15 +4,32 @@ GraphD::GraphD()
 {
 }
 
-GraphD::GraphD(GraphD * g)
+GraphD::GraphD(GraphD * gA) 
 {
+	std::map<vertex, std::vector<vertex>>::iterator it;
+
+	
+
+	for (it = g.begin(); it != g.end(); it++) {
+		if (it->second.size() == 0) {
+			for (int i = 0; i < it->second.size(); i++)
+				g[it->first].push_back(it->second[i]);
+		}
+		else
+			g[it->first];
+
+	 }
+
+	
 }
 
 GraphD::GraphD(std::vector<edge> el)
 {
 
-	for (int i = 0; i < el.size(); i++) 
+	for (int i = 0; i < el.size(); i++) {
 		g[el[i].first].push_back(el[i].second);
+		g[el[i].second];
+	}
 		
 }
 
@@ -58,7 +75,7 @@ bool GraphD::IsEulerian()
 	std::map<vertex, std::vector<vertex>>::iterator it;
 
 	int tmpIndex;
-	int oddIndex;
+	int oddIndex = 0;
 
 	for (it = g.begin(); it != g.end(); it++) {
 		tmpIndex = Index(it->first);

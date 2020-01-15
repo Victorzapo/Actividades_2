@@ -11,7 +11,7 @@ GraphD::GraphD(GraphD * gA)
 	
 
 	for (it = g.begin(); it != g.end(); it++) {
-		if (it->second.size() == 0) {
+		if (it->second.size() != 0) {
 			for (int i = 0; i < it->second.size(); i++)
 				g[it->first].push_back(it->second[i]);
 		}
@@ -49,6 +49,8 @@ void GraphD::Remove(edge ed)
 
 bool GraphD::Path(vertex initial, vertex final)
 {
+
+
 	return false;
 }
 

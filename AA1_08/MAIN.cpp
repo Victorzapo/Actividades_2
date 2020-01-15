@@ -29,12 +29,14 @@ int main(){
 
 	graf.Print(); 
 
+	GraphD cG(graf);
+
 	int index = graf.Index(1);
 	
 
 	bool euler = graf.IsEulerian();
 
-	graf.Remove(f);
+	//graf.Remove(f);
 
 
 	return 0;
